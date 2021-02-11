@@ -37,7 +37,7 @@ class MailGenerica extends PHPMailer
         //Don't forget to do this or other things may not be set correctly!
         parent::__construct($exceptions);
 
-        $this->SMTPDebug = SMTP::DEBUG_OFF;
+        // $this->SMTPDebug = SMTP::DEBUG_SERVER;
 
         $this->CharSet = "UTF-8";
 

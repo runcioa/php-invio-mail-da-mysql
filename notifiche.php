@@ -10,15 +10,18 @@ $id_notifiche = recupera_id_notifica($conn);
 
 foreach ($id_notifiche as $id_notifica) {
     
-    print_r($id_notifica["id_notifiche_mail"]);
+    // print_r($id_notifica["id_notifiche_mail"]);
 
     $notifiche_mail = recupero_notifiche($conn, $id_notifica["id_notifiche_mail"]);
 
+    // print_r($notifiche_mail);
     
     if ($notifiche_mail){
         invio_mail($notifiche_mail);
-        set_notifica_inviata($id_notifica["id_notifiche_mail"], $conn);
+       
     }
+
+    set_notifica_inviata($id_notifica["id_notifiche_mail"], $conn);
 }
 
 function recupero_notifiche($conn, $id_notifica)
@@ -65,11 +68,14 @@ function invio_mail($notifiche_mail)
         $oggetto_mail = $notifica_mail['oggetto'];
         $testo_mail = $notifica_mail['testo'];
         echo $indirizzo_mail . $oggetto_mail . $testo_mail;
+
+        $mail = new MailGenerica(true);
+        $mail->invia($indirizzo_mail, $oggetto_mail, $testo_mail);
     }
 
-    $mail = new MailGenerica(true);
+    
 
-    $mail->invia($indirizzo_mail, $oggetto_mail, $testo_mail);
+    
 }
 
 function set_notifica_inviata($id_notifica, $conn){
